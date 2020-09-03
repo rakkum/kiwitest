@@ -1,0 +1,101 @@
+<h1>Hello world!</h1>
+
+<div class="mat-elevation-z0">
+  <form (ngSubmit)="applyFilter()">
+    <mat-form-field>
+      <mat-label>Title</mat-label>
+      <input matInput [(ngModel)]="searchModel.title" name="filterTitle"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <input matInput [(ngModel)]="searchModel.description" name="filterDescription"/>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" class="app-filter-btn">Filter</button>
+    <button mat-raised-button class="app-filter-btn" (click)="clearFilter()">Clear</button>
+  </form>
+</div>
+
+<div class="mat-elevation-z8">
+  <table mat-table matSort multiTemplateDataRows [dataSource]="data">
+    <!-- Columns -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+      <td mat-cell *matCellDef="let row"> {{row.title}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+      <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="publishDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Publish Date</th>
+      <td mat-cell *matCellDef="let row"> {{row.publishDate | date: 'dd.MM.yyyy'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="authors">
+      <th mat-header-cell *matHeaderCellDef>Authors</th>
+      <td mat-cell *matCellDef="let row"> {{row.authors}} </td>
+    </ng-container>
+
+    <!-- Actions -->
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button color="primary" (click)="openDialog(row)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="getHistory(row)">
+          <mat-icon>history</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- History row -->
+    <ng-container matColumnDef="expandedRow">
+      <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length" class="app-expanded-row">
+        <div
+          class="app-row-detail"
+          [@detailExpand]="row == expandedRow ? 'expanded' : 'collapsed'">
+
+          <div *ngIf="history && history.length" class="app-history">
+            <table class="app-history-table">
+              <tr>
+                <th> Timestamp</th>
+                <th> Field</th>
+                <th> Original Value</th>
+                <th> New Value</th>
+              </tr>
+              <tr *ngFor="let item of history">
+                <td>{{item.timestampUtc | date: 'dd.MM.yyyy HH:mm'}}</td>
+                <td>{{item.fieldName}}</td>
+                <td>{{item.oldValue}}</td>
+                <td>{{item.newValue}}</td>
+              </tr>
+            </table>
+          </div>
+
+          <div *ngIf="!history || history.length === 0" class="app-history">
+            Nothing has ever changed
+          </div>
+
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="app-row"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedRow']" class="app-detail-row"></tr>
+
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 100]" [length]="totalItems"></mat-paginator>
+
+</div>

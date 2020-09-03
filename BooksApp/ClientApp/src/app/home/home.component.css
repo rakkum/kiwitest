@@ -1,0 +1,43 @@
+﻿.mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
+
+.app-filter-btn {
+  margin-left: 8px;
+}
+
+.mat-table {
+  width: 100%;
+}
+
+tr.app-detail-row {
+  height: 0;
+}
+
+.app-row td {
+  border-bottom-width: 0;
+}
+
+.app-expanded-row {
+  background: whitesmoke;
+}
+
+.app-row-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.app-history {
+  padding: 16px;
+}
+
+.app-history-table td {
+  padding: 5px;
+}
+
+.app-history-table th {
+  text-align: left;
+  padding: 5px;
+  font-size: 12px;
+  font-weight: 500;
+}
