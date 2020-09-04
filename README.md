@@ -18,6 +18,9 @@ Purpose of this is to get to know your code style, so its not necessary to write
 
 Since that task is not confidential, you can host the project in any public git repository or send the code to use in another way you prefer, but it should include the commits.
 
+## Used:
+
+.net core 3.1 + angular8 + material design
 
 ## TODOs:
 
